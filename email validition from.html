@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap">
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet"/>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Poppins", sans-serif;
+        }
+        body {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-image:linear-gradient(to right, brown, violet);
+        }
+        .container {
+            position: relative;
+            max-width:600px;
+            max-height:600px;
+            width:100%;
+            padding: 25px;
+            padding:50px;
+            border-radius: 8px;
+            background-color:aliceblue
+        }
+        .container header {
+            font-size:32px;
+            font-weight: 600;
+            color:black;
+        }
+        .container form {
+            margin-top: 30px;
+        }
+        form .field {
+            margin-bottom:20px;
+        }
+        form .input-field {
+            position: relative;
+            height: 55px;
+            width: 100%; 
+        }
+        .input-field input {
+            height: 100%;
+            width: 100%;
+            border-radius:8px;
+            padding: 0 15px;
+            border: 1px solid black;
+        }
+        .invalid .input {
+            border-color: #d93025;
+        }
+        .input-field .show-hide {
+            position: absolute;
+            right: 13px;
+            top: 50px;
+            font-size: 18px;
+            color:black;
+            cursor: pointer;
+            padding:4px;
+        }
+        .field .error {
+            display: flex;
+            align-items: center;
+            margin-top: 6px;
+            color: #d93025;
+            font-size:18px;
+            display: none;
+        }
+        .error .error-icon {
+            margin-right:6px;
+            font-size:25px;
+        }
+        .invalid .error {
+            display: flex;
+        }
+        .create-password .error-icon {
+            margin-top:6px;
+        }
+        .button {
+            margin: 25px 0 6px;
+        }
+         .button input:hover {
+            background-color:rgb(121, 239, 121);
+            border-color:rgb(121, 239, 121);
+        }
+        .button input {
+            color:white;
+            font-size:23px;
+            background-color:black;
+            cursor: pointer;
+    
+        }
+       
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>Signup</header>
+          <form id="signup-form">
+             <div class="field email-field">
+                  <div class="input-field">
+                        <input type="email" placeholder="Enter your email" class="email" />
+                  </div>
+                         <span class="error email-error">
+                        <i class="bx bx-error-circle error-icon"></i>
+                        <p class="error-text">Please enter a valid email</p>
+                        </span>
+             </div>
+                         <div class="field create-password">
+                         <div class="input-field">
+                         <input type="password" placeholder="Create password" class="password"/>
+                        
+        </div>
+                         <span class="error password-error">
+                         <i class="bx bx-error-circle error-icon"></i>
+                         <p class="error-text">Please enter at least 8 characters with numbers, symbols, uppercase, and lowercase letters</p>
+                         </span>
+     </div>
+<div class="field confirm-password">
+  <div class="input-field">
+                         <input type="password" placeholder="Confirm password" class="cpassword"/>
+                        
+    </div>
+                         <span class="error cpassword-error">
+                         <i class="bx bx-error-circle error-icon"></i>
+                         <p class="error-text">Passwords don't match</p>
+                         </span>
+             </div>
+                         <div class="input-field button">
+                         <input type="submit" value="Submit now" />
+            </div>
+        </form>
+    </div>
+
+                         
+ <script>
+     const form = document.getElementById("signup-form");
+     const emailField = form.querySelector(".email-field");
+     const emailInput = emailField.querySelector(".email");
+     const passField = form.querySelector(".create-password");
+     const passInput = passField.querySelector(".password");
+     const cPassField = form.querySelector(".confirm-password");
+     const cPassInput = cPassField.querySelector(".cpassword");
+                    
+                 // Email Validation
+     function checkEmail() {
+     const emailPattern = /^[^]+@[^]+\.[a-z]{2,3}$/;
+     if (!emailInput.value.match(emailPattern)) {
+     emailField.classList.add("invalid");
+     } else {
+     emailField.classList.remove("invalid");
+                                       }
+ }
+             // Hide and Show Password
+     const eyeIcons = document.querySelectorAll(".show-hide");
+     eyeIcons.forEach((eyeIcon) => {
+     eyeIcon.addEventListener("click", () => {
+     const pInput = eyeIcon.parentElement.querySelector("input");
+     if (pInput.type === "password") {
+     eyeIcon.classList.replace("bx-hide", "bx-show");
+     pInput.type = "text";
+                         } else {
+     eyeIcon.classList.replace("bx-show", "bx-hide");
+     pInput.type = "password";
+                         }
+             });
+     });     
+             // Password Validation
+     function createPassword() {
+     const passPattern = /^(?=.[A-Za-z])(?=.\d)(?=.[@$!%?&])[A-Za-z\d@$!%*?&]{8,}$/;
+     if (!passInput.value.match(passPattern)) {
+     passField.classList.add("invalid");
+                } else {
+     passField.classList.remove("invalid");
+                                }
+                            }
+            // Confirm Password Validation
+     function confirmPass() {
+     if (passInput.value !== cPassInput.value || cPassInput.value === "") {
+     cPassField.classList.add("invalid");
+             } else {
+     cPassField.classList.remove("invalid");
+                     }
+                           }
+             // Form Submission
+     form.addEventListener("submit", (e) => {
+     e.preventDefault();
+    checkEmail();
+     createPassword();
+     confirmPass();
+                    
+     if (!emailField.classList.contains("invalid") && !passField.classList.contains("invalid") && !cPassField.classList.contains("invalid")) {
+              // Form submission successful, you can redirect or perform any other action here
+    console.log("Form submitted successfully");
+                                }
+                    });  
+             // Real-time validation on keyup
+    emailInput.addEventListener("keyup", checkEmail);
+     passInput.addEventListener("keyup", createPassword);
+    cPassInput.addEventListener("keyup", confirmPass);
+ </script>
+</body>
+</html>
